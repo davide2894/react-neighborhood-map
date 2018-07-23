@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container } from './components/Container';
+import GoogleMap from './GoogleMap';
+import SearchLocation from './SearchLocation'
+import * as locationJSON from './locations.json'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Container/>
+        <GoogleMap
+          locations={locationJSON}
+        />
+
+        <SearchLocation
+          locations={locationJSON}
+        />
       </div>
-    );
+    );    
   }
 }
 
