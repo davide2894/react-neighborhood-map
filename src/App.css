@@ -5,9 +5,12 @@
     z-index: 2;
     background: #fff;
     position: fixed;
-    top: 10%;
-    width: 180px;
+    /* top: 10%;
+    width: 180px; */
     list-style-type: none;
+    z-index: 2;
+    padding: 1em;
+    margin-top: 0;
 } 
 
 .locationList > li {
@@ -18,3 +21,17 @@
     text-decoration: underline;
     cursor: pointer;
 }
+    
+listViewContainer > * {
+    z-index: 3;
+}
+
+.listViewContainer {
+    position: fixed;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-top: 5em;
+}
+

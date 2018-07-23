@@ -20,13 +20,8 @@
         "position": { "lat": 44.499770, "lng": 11.344429 }
     },
     {
-        "id": "3",
-        "title": "Zanhotel Tre Vecchi",
-        "position": { "lat": 44.499770, "lng": 11.344429 }
-    },
-    {
         "id": "4",
-        "title": "Zanhotel Tre Vecchi",
-        "position": { "lat": 44.501438, "lng": 11.336510 }
+        "title": "Osteria dell'Orsa",
+        "position": { "lat": 44.497284, "lng": 11.347979 }
     }
 ]

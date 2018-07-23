@@ -10,7 +10,7 @@ export default class LocationList extends Component {
                 <ul className="locationList">
                 {locationList.map(location =>
 					<li 
-						key={location.key}
+                        key={location.id}
 					>
 						{location.title}
 					</li>
