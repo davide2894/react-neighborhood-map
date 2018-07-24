@@ -28,15 +28,16 @@ class App extends Component {
 
   componentDidMount(){
   
-    const endpoint = 'https://api.foursquare.com/v2/venues/VENUE_ID';
+    const endpoint = 'https://api.foursquare.com/v2/venues/4bb10d87f964a52029763ce3?';
 
     const params = {
-      clientID: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
-      clientSecret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
-      VENUE_ID: '4bb10d87f964a52029763ce3'
+      client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
+      client_secret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
+      v:"20180323"
+      //VENUE_ID: '4bb10d87f964a52029763ce3'      
     };
 
-    fetch(endpoint + new URLSearchParams(params), {
+    fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
       method: 'GET'
     })
     .then(res=>res.json())
@@ -91,3 +92,15 @@ class App extends Component {
 
 export default App;
 
+/*
+i think the format of the url when fettching is not valid
+Jan Sysala [11:21 PM]
+look at the url i did send before
+Jan Sysala [11:25 PM]
+also with the endpoint + new... you will still have url with venues/VENUE_ID? 
+and you need venues/4bb10d87f964a52029763ce3&client_id=...
+Jan Sysala [11:25 PM]
+idk what URLSearchParams
+Jan Sysala [11:25 PM]
+does
+*/
