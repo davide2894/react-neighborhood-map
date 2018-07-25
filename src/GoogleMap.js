@@ -35,7 +35,6 @@ export class GoogleMap extends Component {
 				className="googleMap"
 				google={this.props.google}
 				zoom={13.5}
-	
 				style={styles}
 				initialCenter={{ lat: 44.498955, lng: 11.327591 }}
 			>
@@ -54,7 +53,7 @@ export class GoogleMap extends Component {
 				 visible={this.state.showInfoWindow}>
 			>
 				<div>
-					<h1>{this.state.activeMarker.title}</h1>
+					<h1>{this.state.activeMarker.rating}</h1>
 				</div>
        		</InfoWindow>	
 			</Map>

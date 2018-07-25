@@ -22,13 +22,13 @@ class App extends Component {
       filteredLocations: locationJSON,
       showInfoWindow: false,
       currentMarker: {},
-      response: {}
+      response: {},
     }
   }
 
   componentDidMount(){
-  
-    const endpoint = 'https://api.foursquare.com/v2/venues/4bb10d87f964a52029763ce3?';
+
+    const endpoint = 'https://api.foursquare.com/v2/venues/';
 
     const params = {
       client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
@@ -37,11 +37,25 @@ class App extends Component {
       //VENUE_ID: '4bb10d87f964a52029763ce3'      
     };
 
-    fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-      method: 'GET'
+    locationJSON.map((location) => {
+      console.log(location.venueId);
+      const dataFromApi = fetch(`${endpoint}${location.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response.response.venue.rating)
+        location["rating"]=response.response.venue.rating;
+        })
+
+  
     })
-    .then(res=>res.json())
-    .then(response => this.setState({response: response}));
+
+    // fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
+    //   method: 'GET'
+    // })
+    // .then(res=>res.json())
+    // .then(response => this.setState({response: response}));
 
   }
 
@@ -100,7 +114,7 @@ Jan Sysala [11:25 PM]
 also with the endpoint + new... you will still have url with venues/VENUE_ID? 
 and you need venues/4bb10d87f964a52029763ce3&client_id=...
 Jan Sysala [11:25 PM]
-idk what URLSearchParams
+idk -,what URLSearchParams
 Jan Sysala [11:25 PM]
 does
 */
