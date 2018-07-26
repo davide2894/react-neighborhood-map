@@ -77,8 +77,8 @@ export class GoogleMap extends Component {
 			>
 				{this.state.activeMarkerInfo &&
 					<div>
-						<h1>{this.state.activeMarker.title}</h1>
-						<blockquote>this.state.activeMarkerInfo</blockquote>
+						<h1 className="locationTitle">{this.state.activeMarker.title}</h1>
+						<blockquote className="locationInfo" >this.state.activeMarkerInfo</blockquote>
 					</div>
 				}
        		</InfoWindow>	
