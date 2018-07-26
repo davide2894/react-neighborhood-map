@@ -4,6 +4,7 @@ import GoogleMap from './GoogleMap';
 import * as locationJSON from './locations.json'
 import ListView from './ListView';
 import escapeRegExp from 'escape-string-regexp'
+import { slide as Menu } from 'react-burger-menu'
 
 // var foursquare = require('react-foursquare')({
 //   clientID: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
@@ -26,38 +27,37 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
+  // componentDidMount(){
 
-    const endpoint = 'https://api.foursquare.com/v2/venues/';
+  //   const endpoint = 'https://api.foursquare.com/v2/venues/';
 
-    const params = {
-      client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
-      client_secret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
-      v:"20180323"
-      //VENUE_ID: '4bb10d87f964a52029763ce3'      
-    };
+  //   const params = {
+  //     client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
+  //     client_secret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
+  //     v:"20180323"
+  //     //VENUE_ID: '4bb10d87f964a52029763ce3'      
+  //   };
 
-    locationJSON.map((location) => {
-      console.log(location.venueId);
-      const dataFromApi = fetch(`${endpoint}${location.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-        method: 'GET'
-      })
-      .then(res => res.json())
-      .then(response => {
-        console.log(response.response.venue.rating)
-        location["rating"]=response.response.venue.rating;
-        })
+  //   locationJSON.map((location) => {
+  //     const dataFromApi = fetch(`${endpoint}${location.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
+  //       method: 'GET'
+  //     })
+  //     .then(res => res.json())
+  //     .then(response => 
+  //       //console.log(response.response.venue.rating);
+  //       location["rating"]=response.response.venue.rating
+  //       )
 
   
-    })
+  //   })
 
-    // fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-    //   method: 'GET'
-    // })
-    // .then(res=>res.json())
-    // .then(response => this.setState({response: response}));
+  //   // fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
+  //   //   method: 'GET'
+  //   // })
+  //   // .then(res=>res.json())
+  //   // .then(response => this.setState({response: response}));
 
-  }
+  // }
 
   updateFilteredLocations = (query) => {
     
@@ -87,6 +87,45 @@ class App extends Component {
   render() {
     const { filteredLocations } = this.state;
     console.log(this.state.response);
+
+    var styles = {
+      bmBurgerButton: {
+        position: 'fixed',
+        width: '36px',
+        height: '30px',
+        left: '36px',
+        top: '36px'
+      },
+      bmBurgerBars: {
+        background: '#373a47'
+      },
+      bmCrossButton: {
+        height: '24px',
+        width: '24px'
+      },
+      bmCross: {
+        background: '#bdc3c7'
+      },
+      bmMenu: {
+        background: '#373a47',
+        padding: '2.5em 1.5em 0',
+        fontSize: '1.15em'
+      },
+      bmMorphShape: {
+        fill: '#373a47'
+      },
+      bmItemList: {
+        color: '#333',
+        padding: '0.8em'
+      },
+      bmItem: {
+        display: 'inline-block'
+      },
+      bmOverlay: {
+        background: 'rgba(0, 0, 0, 0.3)'
+      }
+    }
+
     return (
       <div className="App">
         <GoogleMap
@@ -95,10 +134,19 @@ class App extends Component {
           getCurrentMarker={this.getCurrentMarker}
         />
 
-        <ListView
-          locations={filteredLocations}
-          updateFilteredLocations={this.updateFilteredLocations}
-        />
+        <Menu 
+          className="hamburgerMenu"
+          width={280}
+          isOpen={false}
+          noOverlay
+          disableOverlayClick
+          styles={styles}
+        > 
+          <ListView
+            locations={filteredLocations}
+            updateFilteredLocations={this.updateFilteredLocations}
+          />
+        </Menu>
       </div>
     );    
   }

@@ -1,5 +1,7 @@
 .googleMap {
     z-index: 0;
+    max-width: 100%;
+    margin: 0 auto;
 }
 .locationList {
     z-index: 2;
@@ -35,3 +37,12 @@ listViewContainer > * {
     margin-top: 5em;
 }
 
+.infoWindow {
+    max-width: 100%;
+}
+
+.hamburgerMenu {
+    z-index: 2;
+    background: red;
+    width: 200px;
+}
