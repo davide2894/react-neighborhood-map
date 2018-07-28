@@ -17,7 +17,7 @@ export default class ListView extends Component {
         const { query } = this.state;
         const { locations } = this.props;
 
-        return(
+        return(     
             <div className='listViewContainer'>
                 <div className='query'>{query}</div>
                 <form 
@@ -34,6 +34,9 @@ export default class ListView extends Component {
 				</form>
                 <LocationList
                     locationList={locations}
+                    onClick={this.props.onClick}
+                    locationInListIsClicked={this.props.locationInListIsClicked}
+                    currentMarker={this.props.currentMarker}
                 />
             </div>
         )   

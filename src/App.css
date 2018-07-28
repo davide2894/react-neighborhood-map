@@ -47,6 +47,8 @@ table {
 	border-spacing: 0;
 }
 
+
+
 /*
     CUSTOM STYLES
 */
@@ -56,12 +58,18 @@ table {
     max-width: 100%;
     margin: 0 auto;
 }
+
+.locationFilter {
+    width: 200px;
+}
+
 .locationList {
     z-index: 2;
     background: #fff;
     position: fixed;
     /* top: 10%;
     width: 180px; */
+    width: 150px;
     list-style-type: none;
     z-index: 2;
     padding: 1em;
@@ -108,3 +116,10 @@ listViewContainer > * {
 .locationInfo {
     margin-top: 1.5em;
 }
+
+.blackMarker {
+    font-size: 1.4em;
+    color: #333;
+    transition: 0.2s ease-in-out;
+}
+

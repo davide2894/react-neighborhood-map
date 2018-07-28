@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class LocationList extends Component {
     render(){
 
-        const {locationList} = this.props;
+        const {locationList, locationInListIsClicked} = this.props;
 
         return(
             <div>
@@ -11,9 +11,12 @@ export default class LocationList extends Component {
                 {locationList.map(location =>
 					<li 
                         key={location.id}
+                        onClick={ () => locationInListIsClicked(location)}
 					>
-						{location.title}
+                        {location.title}
+
 					</li>
+                    
 				)}  
                 </ul>
             </div>

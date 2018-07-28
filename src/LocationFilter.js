@@ -6,9 +6,13 @@ export default class LocationFilter extends Component {
         this.state = {
             query: ""
         }
+        this.filter=React.createRef();
+
     }
 
+    
     render(){
+        this.filter.focus();
 
         updatedQuery = (updatedQuery) => {
             this.setState({query: updatedQuery});
@@ -19,6 +23,7 @@ export default class LocationFilter extends Component {
                 <form
 				>
 					<input
+                        ref={this.filter}
 						type="text"
 						placeholder="Look for a location"
 						value={query}

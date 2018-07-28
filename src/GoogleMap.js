@@ -9,7 +9,10 @@ export class GoogleMap extends Component {
 			showInfoWindow: false,
 			activeMarker: {},
 			selectedPlace: {},
-			activeMarkerInfo: {}
+			activeMarkerInfo: "",
+			isMarkerClicked: false,
+			icon: {},
+			clickedLocationInList: this.props.currentMarker
 		}
 	}
 
@@ -17,7 +20,8 @@ export class GoogleMap extends Component {
 		this.setState({
 			selectedPlace: this.props.locations,
 			activeMarker: marker,
-			showInfoWindow: true
+			showInfoWindow: true,
+			isMarkerClicked: true
 		});
 
 		const endpoint = 'https://api.foursquare.com/v2/venues/';
@@ -34,25 +38,37 @@ export class GoogleMap extends Component {
 		.then(res => res.json())
 		.then(resp => {
 			console.log(resp);
-			//this.setState({activeMarkerInfo: response.response.venue.description})
+			this.setState({activeMarkerInfo: resp.response.venue.rating})
 		})
-
 	}
-		
-
+	
+	
 	render() {
-		//console.log(this.state.selectedPlace);
-		//console.log(this.state.activeMarker);
-		//console.log('this.state.activeMarkerInfo', this.state.activeMarkerInfo);
-
+		
 		const styles = {
 			width: '100%',
-			height: '100%'
+			height: '100%',
+			clickedMarker: {
+				fontSize: '1.4em',
+				color: '#333',
+				transition: '0.2s ease-in-out',		
+			}
 		};
 
 		const {locations} = this.props;	
 
+		const clickedIcon = {
+            url: "https://loc8tor.co.uk/wp-content/uploads/2015/08/stencil.png",
+            scaledSize: new this.props.google.maps.Size(90, 42),
+		};
+
+		const defaultIcon = {
+			url: 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|0091ff|40|_|%E2%80%A2', // url
+			scaledSize: new this.props.google.maps.Size(20, 30), // scaled size
+		};
+
 		return (
+
 			<Map
 				className="googleMap"
 				google={this.props.google}
@@ -63,11 +79,13 @@ export class GoogleMap extends Component {
 
 			{locations.map(location =>
 				<Marker
+					style={this.state.isMarkerClicked && styles.clickedMarker}
 					key={location.id}
 					title={location.title}
 					position={location.position}
 					venueId={location.venueId}
 					onClick={this.onMarkerClick}
+					icon={location.title === this.state.activeMarker.title ? clickedIcon : defaultIcon}
 				/>
 			)}
 			<InfoWindow 
@@ -78,7 +96,7 @@ export class GoogleMap extends Component {
 				{this.state.activeMarkerInfo &&
 					<div>
 						<h1 className="locationTitle">{this.state.activeMarker.title}</h1>
-						<blockquote className="locationInfo" >this.state.activeMarkerInfo</blockquote>
+						<blockquote className="locationInfo">Foursquare Rating: {this.state.activeMarkerInfo}</blockquote>
 					</div>
 				}
        		</InfoWindow>	

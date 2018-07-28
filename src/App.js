@@ -6,15 +6,6 @@ import ListView from './ListView';
 import escapeRegExp from 'escape-string-regexp'
 import { slide as Menu } from 'react-burger-menu'
 
-// var foursquare = require('react-foursquare')({
-//   clientID: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
-//   clientSecret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
-// });
-
-// var params = {
-//   VENUE_ID: '4bb10d87f964a52029763ce3'
-// };
-
 class App extends Component {
 
   constructor(){
@@ -24,40 +15,9 @@ class App extends Component {
       showInfoWindow: false,
       currentMarker: {},
       response: {},
+      clickedMarker: {}
     }
   }
-
-  // componentDidMount(){
-
-  //   const endpoint = 'https://api.foursquare.com/v2/venues/';
-
-  //   const params = {
-  //     client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
-  //     client_secret: '05HYA2D2PW235BLHEZUSCCTQWI2TCDQWHWHZDLEFIOIKI3P4',
-  //     v:"20180323"
-  //     //VENUE_ID: '4bb10d87f964a52029763ce3'      
-  //   };
-
-  //   locationJSON.map((location) => {
-  //     const dataFromApi = fetch(`${endpoint}${location.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-  //       method: 'GET'
-  //     })
-  //     .then(res => res.json())
-  //     .then(response => 
-  //       //console.log(response.response.venue.rating);
-  //       location["rating"]=response.response.venue.rating
-  //       )
-
-  
-  //   })
-
-  //   // fetch(`${endpoint}client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-  //   //   method: 'GET'
-  //   // })
-  //   // .then(res=>res.json())
-  //   // .then(response => this.setState({response: response}));
-
-  // }
 
   updateFilteredLocations = (query) => {
     
@@ -84,9 +44,61 @@ class App extends Component {
       });
   }
 
+
+  getClickedMarker = (marker) => {
+    this.setState({
+      clickedMarker: marker
+    });
+  }
+
+  toggleInfoBox = (marker) => {
+    this.setState((prevState) => ({
+      infoBoxIsOpen: !(prevState.infoBoxIsOpen)
+    }));
+    this.getClickedMarker(marker);
+  }
+
+  locationInListIsClicked = (marker) => {
+    //this.toggleInfoBox(marker);
+    this.setState({
+      currentMarker: marker
+    });
+  }
+
+
+  onMarkerClick = (props, marker, e) => {
+		this.setState({
+			selectedPlace: this.props.locations,
+			activeMarker: marker,
+			showInfoWindow: true,
+			isMarkerClicked: true
+		});
+
+		const endpoint = 'https://api.foursquare.com/v2/venues/';
+
+		const params = {
+		  client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
+		  client_secret: 'JPMG5BHSRIECSFICJ3B1INNWNZIVU4JG3OVRFFC1WU0JT3FF',
+		  v:"20180323"
+		};
+	
+		fetch(`${endpoint}${marker.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
+			method: 'GET'
+		})
+		.then(res => res.json())
+		.then(resp => {
+			console.log(resp);
+			this.setState({activeMarkerInfo: resp.response.venue.rating})
+		})
+
+	}
+
+
+
   render() {
     const { filteredLocations } = this.state;
-    console.log(this.state.response);
+    
+    console.log(this.state.currentMarker);
 
     var styles = {
       bmBurgerButton: {
@@ -126,9 +138,14 @@ class App extends Component {
       }
     }
 
+    // menuIsClicked = (event) => {
+    //     event.preventDefault();
+    // }
+
     return (
       <div className="App">
         <GoogleMap
+          role="main"
           locations={filteredLocations}
           currentMarker={this.state.currentMarker}
           getCurrentMarker={this.getCurrentMarker}
@@ -141,10 +158,14 @@ class App extends Component {
           noOverlay
           disableOverlayClick
           styles={styles}
-        > 
+          onClick={this.menuIsClicked}
+        >
           <ListView
+            role="list"
             locations={filteredLocations}
             updateFilteredLocations={this.updateFilteredLocations}
+            locationInListIsClicked={this.locationInListIsClicked}
+            currentMarker={this.state.currentMarker}
           />
         </Menu>
       </div>
