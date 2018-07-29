@@ -7,11 +7,12 @@ export default class LocationList extends Component {
 
         return(
             <div>
-                <ul className="locationList">
+                <ul className="locationList" tabIndex="-1">
                 {locationList.map(location =>
 					<li 
                         key={location.id}
                         onClick={ () => locationInListIsClicked(location)}
+                        tabIndex="0"
 					>
                         {location.title}
 

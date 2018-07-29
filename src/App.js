@@ -65,36 +65,6 @@ class App extends Component {
     });
   }
 
-
-  onMarkerClick = (props, marker, e) => {
-		this.setState({
-			selectedPlace: this.props.locations,
-			activeMarker: marker,
-			showInfoWindow: true,
-			isMarkerClicked: true
-		});
-
-		const endpoint = 'https://api.foursquare.com/v2/venues/';
-
-		const params = {
-		  client_id: 'RJZMA0DVSXNVV1VEXCS2ZO3D2NE0ZLW1HV40AUKF5WKWUX1O',
-		  client_secret: 'JPMG5BHSRIECSFICJ3B1INNWNZIVU4JG3OVRFFC1WU0JT3FF',
-		  v:"20180323"
-		};
-	
-		fetch(`${endpoint}${marker.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
-			method: 'GET'
-		})
-		.then(res => res.json())
-		.then(resp => {
-			console.log(resp);
-			this.setState({activeMarkerInfo: resp.response.venue.rating})
-		})
-
-	}
-
-
-
   render() {
     const { filteredLocations } = this.state;
     
@@ -143,7 +113,9 @@ class App extends Component {
     // }
 
     return (
-      <div className="App">
+      <div 
+        className="App"
+      >
         <GoogleMap
           role="main"
           locations={filteredLocations}
@@ -154,7 +126,6 @@ class App extends Component {
         <Menu 
           className="hamburgerMenu"
           width={280}
-          isOpen={false}
           noOverlay
           disableOverlayClick
           styles={styles}

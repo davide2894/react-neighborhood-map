@@ -23,6 +23,7 @@ export default class LocationFilter extends Component {
                 <form
 				>
 					<input
+                        tabIndex="-1"
                         ref={this.filter}
 						type="text"
 						placeholder="Look for a location"

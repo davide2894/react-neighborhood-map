@@ -39,6 +39,11 @@ export class GoogleMap extends Component {
 		.then(resp => {
 			console.log(resp);
 			this.setState({activeMarkerInfo: resp.response.venue.rating})
+		}, (error) => {
+			if(error){
+			  //handle error 
+			  alert(error)
+			}
 		})
 	}
 	
@@ -98,7 +103,7 @@ export class GoogleMap extends Component {
 				{this.state.activeMarkerInfo &&
 					<div>
 						<h1 className="locationTitle">{this.state.activeMarker.title}</h1>
-						<blockquote className="locationInfo">Foursquare Rating: {this.state.activeMarkerInfo}</blockquote>
+						<blockquote className="locationInfo"><i>Rating provided by <a href="https://foursquare.com/">Foursquare</a></i>: {this.state.activeMarkerInfo}</blockquote>
 					</div>
 				}
        		</InfoWindow>	

@@ -19,8 +19,13 @@ To start developing:
 * `yarn install`
 * `yarn start`
 
+## Offline usage
+This web application uses React's Service Worker, a tool that stores all content in cache. This allows you to use this app always, whatever is your connection status.
+
+To mak it work, run a production build (see below).
+
 ## Build
-To test the development mode, run `yarn build`
+To run the build (production) version, just run `yarn build` on your terminal.
 
 ## License
 This repository uses the MIT License.
