@@ -88,10 +88,12 @@ export class GoogleMap extends Component {
 					icon={location.title === this.state.activeMarker.title ? clickedIcon : defaultIcon}
 				/>
 			)}
+			
 			<InfoWindow 
-				 onClose={this.onInfoWindowClose}
-				 marker={this.state.activeMarker}
-				 visible={this.state.showInfoWindow}>
+				key={this.state.activeMarkerInfo.ven}
+				onClose={this.onInfoWindowClose}
+				marker={this.state.activeMarker}
+				visible={this.state.showInfoWindow}
 			>
 				{this.state.activeMarkerInfo &&
 					<div>
