@@ -16,7 +16,7 @@ export default class ListView extends Component {
     render(){
         const { query } = this.state;
         const { locations } = this.props;
-
+        console.log(this.props.currentMarker)
         return(     
             <div className='listViewContainer'>
                 <div className='query'>{query}</div>
@@ -36,7 +36,6 @@ export default class ListView extends Component {
                     locationList={locations}
                     onClick={this.props.onClick}
                     locationInListIsClicked={this.props.locationInListIsClicked}
-                    currentMarker={this.props.currentMarker}
                 />
             </div>
         )   

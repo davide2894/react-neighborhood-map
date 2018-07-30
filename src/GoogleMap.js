@@ -54,6 +54,8 @@ export class GoogleMap extends Component {
 		.catch((error) => {
 			console.log(error);
 		})
+
+		this.props.toggleInfoBox(props);
 	}
 	
 	
@@ -102,7 +104,7 @@ export class GoogleMap extends Component {
 				/>
 			)}
 			
-			<InfoWindow AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
+			<InfoWindow
 				key={this.state.activeMarkerInfo.venueId}
 				onClose={this.onInfoWindowClose}
 				marker={this.state.activeMarker}

@@ -5,6 +5,7 @@ import * as locationJSON from './locations.json'
 import ListView from './ListView';
 import escapeRegExp from 'escape-string-regexp'
 import { slide as Menu } from 'react-burger-menu'
+import InfoWindowFromMenu from './InfoWindowFromMenus';
 
 class App extends Component {
 
@@ -51,14 +52,24 @@ class App extends Component {
   }
 
   locationInListIsClicked = (marker) => {
+    this.toggleInfoBox(marker);
     this.setState({
       currentMarker: marker
     });
   }
 
+
+  toggleInfoBox = (marker) => {
+    this.setState((prevState) => ({
+      infoBoxIsOpen: !(prevState.infoBoxIsOpen)
+    }));
+    this.getClickedMarker(marker);
+  }
+
   render() {
     const { filteredLocations } = this.state;
-    
+    console.log(this.state.currentMarker)
+
     var styles = {
       bmBurgerButton: {
         position: 'fixed',
@@ -101,11 +112,13 @@ class App extends Component {
       <div 
         className="App"
       >
+        {this.state.toggleInfoBox && <InfoWindowFromMenu />}
         <GoogleMap
           role="application"
           locations={filteredLocations}
           currentMarker={this.state.currentMarker}
           getCurrentMarker={this.getCurrentMarker}
+          toggleInfoBox={this.toggleInfoBox}
         />
 
         <Menu  
@@ -122,7 +135,6 @@ class App extends Component {
             locations={filteredLocations}
             updateFilteredLocations={this.updateFilteredLocations}
             locationInListIsClicked={this.locationInListIsClicked}
-            currentMarker={this.state.currentMarker}
           />
         </Menu>
       </div>
