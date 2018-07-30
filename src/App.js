@@ -22,7 +22,6 @@ class App extends Component {
   updateFilteredLocations = (query) => {
     
     if(query){
-      console.log(query)
 
       const match = new RegExp(escapeRegExp(query), 'i');
       
@@ -51,15 +50,7 @@ class App extends Component {
     });
   }
 
-  toggleInfoBox = (marker) => {
-    this.setState((prevState) => ({
-      infoBoxIsOpen: !(prevState.infoBoxIsOpen)
-    }));
-    this.getClickedMarker(marker);
-  }
-
   locationInListIsClicked = (marker) => {
-    //this.toggleInfoBox(marker);
     this.setState({
       currentMarker: marker
     });
@@ -68,8 +59,6 @@ class App extends Component {
   render() {
     const { filteredLocations } = this.state;
     
-    console.log(this.state.currentMarker);
-
     var styles = {
       bmBurgerButton: {
         position: 'fixed',
@@ -108,28 +97,25 @@ class App extends Component {
       }
     }
 
-    // menuIsClicked = (event) => {
-    //     event.preventDefault();
-    // }
-
     return (
       <div 
         className="App"
       >
         <GoogleMap
-          role="main"
+          role="application"
           locations={filteredLocations}
           currentMarker={this.state.currentMarker}
           getCurrentMarker={this.getCurrentMarker}
         />
 
-        <Menu 
+        <Menu  
           className="hamburgerMenu"
           width={280}
           noOverlay
           disableOverlayClick
           styles={styles}
           onClick={this.menuIsClicked}
+          isOpen={true}
         >
           <ListView
             role="list"
@@ -145,16 +131,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
-i think the format of the url when fettching is not valid
-Jan Sysala [11:21 PM]
-look at the url i did send before
-Jan Sysala [11:25 PM]
-also with the endpoint + new... you will still have url with venues/VENUE_ID? 
-and you need venues/4bb10d87f964a52029763ce3&client_id=...
-Jan Sysala [11:25 PM]
-idk -,what URLSearchParams
-Jan Sysala [11:25 PM]
-does
-*/

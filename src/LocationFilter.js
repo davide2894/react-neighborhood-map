@@ -6,13 +6,11 @@ export default class LocationFilter extends Component {
         this.state = {
             query: ""
         }
-        this.filter=React.createRef();
 
     }
 
     
     render(){
-        this.filter.focus();
 
         updatedQuery = (updatedQuery) => {
             this.setState({query: updatedQuery});
@@ -23,10 +21,10 @@ export default class LocationFilter extends Component {
                 <form
 				>
 					<input
-                        tabIndex="-1"
-                        ref={this.filter}
+                        aria-labelledby="filter"
 						type="text"
-						placeholder="Look for a location"
+                        autofocus="true"
+                        placeholder="Look for a location"
 						value={query}
 						onChange={(event) => 
 							this.sendUpdatedQueryUp(event.target.value)}

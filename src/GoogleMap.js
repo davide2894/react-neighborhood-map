@@ -9,10 +9,15 @@ export class GoogleMap extends Component {
 			showInfoWindow: false,
 			activeMarker: {},
 			selectedPlace: {},
-			activeMarkerInfo: "",
+			activeMarkerInfo: [],
 			isMarkerClicked: false,
 			icon: {},
 			clickedLocationInList: this.props.currentMarker
+		}
+	}
+	componentDidMount() {
+		window.gm_authFailure = function () {
+		  alert("Sorry, couldn't load Google Maps...");
 		}
 	}
 
@@ -35,15 +40,19 @@ export class GoogleMap extends Component {
 		fetch(`${endpoint}${marker.venueId}?client_id=${params.client_id}&client_secret=${params.client_secret}&v=${params.v}`, {
 			method: 'GET'
 		})
-		.then(res => res.json())
-		.then(resp => {
-			console.log(resp);
-			this.setState({activeMarkerInfo: resp.response.venue.rating})
-		}, (error) => {
-			if(error){
-			  //handle error 
-			  alert(error)
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} else {
+				alert("Sorry, can't get information from Foursquare...");
+				throw new Error("Sorry, can't get information from Foursquare...");			
 			}
+		})
+		.then(resp => {
+			this.setState({activeMarkerInfo: resp.response.venue.rating})
+		})
+		.catch((error) => {
+			console.log(error);
 		})
 	}
 	
@@ -73,7 +82,6 @@ export class GoogleMap extends Component {
 		};
 
 		return (
-
 			<Map
 				className="googleMap"
 				google={this.props.google}
@@ -94,8 +102,8 @@ export class GoogleMap extends Component {
 				/>
 			)}
 			
-			<InfoWindow 
-				key={this.state.activeMarkerInfo.ven}
+			<InfoWindow AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
+				key={this.state.activeMarkerInfo.venueId}
 				onClose={this.onInfoWindowClose}
 				marker={this.state.activeMarker}
 				visible={this.state.showInfoWindow}
@@ -103,7 +111,7 @@ export class GoogleMap extends Component {
 				{this.state.activeMarkerInfo &&
 					<div>
 						<h1 className="locationTitle">{this.state.activeMarker.title}</h1>
-						<blockquote className="locationInfo"><i>Rating provided by <a href="https://foursquare.com/">Foursquare</a></i>: {this.state.activeMarkerInfo}</blockquote>
+						<blockquote className="locationInfo"><i>Rating provided by <a href="https://foursquare.com/">Foursquare</a></i>: {this.state.activeMarkerInfo ? this.state.activeMarkerInfo : null}</blockquote>
 					</div>
 				}
        		</InfoWindow>	
