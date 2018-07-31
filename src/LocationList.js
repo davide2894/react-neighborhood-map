@@ -14,7 +14,6 @@ export default class LocationList extends Component {
                 {locationList.map(location =>
                     <li 
                         tabIndex={0}
-                        role="button"
                         key={location.id}
                         onClick={ () => locationInListIsClicked(location)}
 					>

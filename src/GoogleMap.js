@@ -105,6 +105,7 @@ export class GoogleMap extends Component {
 			)}
 			
 			<InfoWindow
+				role="Article"
 				key={this.state.activeMarkerInfo.venueId}
 				onClose={this.onInfoWindowClose}
 				marker={this.state.activeMarker}

@@ -5,7 +5,7 @@ import * as locationJSON from './locations.json'
 import ListView from './ListView';
 import escapeRegExp from 'escape-string-regexp'
 import { slide as Menu } from 'react-burger-menu'
-import InfoWindowFromMenu from './InfoWindowFromMenus';
+import InfoWindowFromMenu from './InfoWindowFromMenu';
 
 class App extends Component {
 
@@ -122,6 +122,7 @@ class App extends Component {
         />
 
         <Menu  
+          role="Menu"
           className="hamburgerMenu"
           width={280}
           noOverlay
@@ -131,7 +132,6 @@ class App extends Component {
           isOpen={true}
         >
           <ListView
-            role="list"
             locations={filteredLocations}
             updateFilteredLocations={this.updateFilteredLocations}
             locationInListIsClicked={this.locationInListIsClicked}

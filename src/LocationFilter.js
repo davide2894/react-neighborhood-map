@@ -19,9 +19,11 @@ export default class LocationFilter extends Component {
         return(
             <div>
                 <form
+                    role="searchbox"
 				>
 					<input
-                        aria-labelledby="filter"
+                        aria-labelledby="Look for a location"
+                        aria-required="false"
 						type="text"
                         autofocus="true"
                         placeholder="Look for a location"

@@ -20,7 +20,8 @@ export default class ListView extends Component {
         return(     
             <div className='listViewContainer'>
                 <div className='query'>{query}</div>
-                <form 
+                <form
+                    role="searchbox"
                     className='locationFilter'
                     onSubmit={(event)=>event.preventDefault()}
                 >
@@ -33,6 +34,7 @@ export default class ListView extends Component {
 					/>
 				</form>
                 <LocationList
+                    role="List"
                     locationList={locations}
                     onClick={this.props.onClick}
                     locationInListIsClicked={this.props.locationInListIsClicked}
