@@ -16,8 +16,23 @@ class App extends Component {
       showInfoWindow: false,
       currentMarker: {},
       response: {},
-      clickedMarker: {}
+      clickedMarker: {},
+      locationClicked: {},
+      locationToFetchVenue: "",
+      activeMarker: {},
+			showInfoWindow: false,
+			isMarkerClicked: false
     }
+  }
+
+  updateLocationToFetcVenue = (venueId) => {
+    this.setState({locationToFetchVenue: venueId})
+  }
+
+  locationInListIsClicked = (marker) => {
+    this.setState({currentMarker: marker});
+    //console.log("marker from locationInListIsClicked", marker.venueId)
+    this.setState({ locationToFetchVenue: marker.venueId });
   }
 
   updateFilteredLocations = (query) => {
@@ -44,32 +59,17 @@ class App extends Component {
       });
   }
 
-
   getClickedMarker = (marker) => {
     this.setState({
       clickedMarker: marker
     });
   }
 
-  locationInListIsClicked = (marker) => {
-    this.toggleInfoBox(marker);
-    this.setState({
-      currentMarker: marker
-    });
-  }
-
-
-  toggleInfoBox = (marker) => {
-    this.setState((prevState) => ({
-      infoBoxIsOpen: !(prevState.infoBoxIsOpen)
-    }));
-    this.getClickedMarker(marker);
-  }
-
   render() {
     const { filteredLocations } = this.state;
-    console.log(this.state.currentMarker)
-
+    //console.log('locationClicked', this.state.locationClicked)
+    console.log('currentMarker', this.state.currentMarker)
+      
     var styles = {
       bmBurgerButton: {
         position: 'fixed',
@@ -114,14 +114,19 @@ class App extends Component {
       >
         {this.state.toggleInfoBox && <InfoWindowFromMenu />}
         <GoogleMap
+          tabIndex={0}
           role="application"
           locations={filteredLocations}
           currentMarker={this.state.currentMarker}
           getCurrentMarker={this.getCurrentMarker}
-          toggleInfoBox={this.toggleInfoBox}
+          updateLocationToFetcVenue={this.updateLocationToFetcVenue}
+          locationToFetchVenue={this.state.locationToFetchVenue}
+          currentMarkerPosition={this.state.currentMarker.position}
+          onClick={this.onMarkerClick}
         />
 
         <Menu  
+          tabIndex={0}
           role="Menu"
           className="hamburgerMenu"
           width={280}
@@ -129,12 +134,15 @@ class App extends Component {
           disableOverlayClick
           styles={styles}
           onClick={this.menuIsClicked}
+          ref={(input) => { this.nameInput = input; }} 
           isOpen={true}
         >
           <ListView
+            tabIndex={0}
             locations={filteredLocations}
             updateFilteredLocations={this.updateFilteredLocations}
             locationInListIsClicked={this.locationInListIsClicked}
+            updateLocationToFetcVenue={this.updateLocationToFetcVenue}
           />
         </Menu>
       </div>

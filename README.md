@@ -1,6 +1,6 @@
 # React Neighborhood Map
 
-## What is this?
+## What is this?  
 It's a web application that shows the Bologna area (Italy) and highlights my favourite locations there.
 
 ## Technologies used

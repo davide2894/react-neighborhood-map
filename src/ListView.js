@@ -13,10 +13,14 @@ export default class ListView extends Component {
         this.props.updateFilteredLocations(query);
     }
 
+    componentDidMount(){
+        this.nameInput.focus(); 
+    }
+
     render(){
         const { query } = this.state;
         const { locations } = this.props;
-        console.log(this.props.currentMarker)
+              
         return(     
             <div className='listViewContainer'>
                 <div className='query'>{query}</div>
@@ -24,8 +28,10 @@ export default class ListView extends Component {
                     role="searchbox"
                     className='locationFilter'
                     onSubmit={(event)=>event.preventDefault()}
-                >
+                    >
 					<input
+                        tabIndex={-1}
+                        ref={(input) => { this.nameInput = input; }} 
 						type="text"
 						placeholder="Look for a location"
 						value={query}
@@ -38,6 +44,7 @@ export default class ListView extends Component {
                     locationList={locations}
                     onClick={this.props.onClick}
                     locationInListIsClicked={this.props.locationInListIsClicked}
+                    updateLocationToFetcVenue={this.props.updateLocationToFetcVenue}
                 />
             </div>
         )   

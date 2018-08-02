@@ -8,7 +8,6 @@ export class GoogleMap extends Component {
 		this.state = {
 			showInfoWindow: false,
 			activeMarker: {},
-			selectedPlace: {},
 			activeMarkerInfo: [],
 			isMarkerClicked: false,
 			icon: {},
@@ -20,10 +19,12 @@ export class GoogleMap extends Component {
 		  alert("Sorry, couldn't load Google Maps...");
 		}
 	}
-
+	
 	onMarkerClick = (props, marker, e) => {
+		
+		console.log("marker.venueId", marker.venueId);
+
 		this.setState({
-			selectedPlace: this.props.locations,
 			activeMarker: marker,
 			showInfoWindow: true,
 			isMarkerClicked: true
@@ -54,13 +55,13 @@ export class GoogleMap extends Component {
 		.catch((error) => {
 			console.log(error);
 		})
-
-		this.props.toggleInfoBox(props);
 	}
 	
-	
 	render() {
-		
+
+		//console.log("this.props.locationToFetchVenue", this.props.locationToFetchVenue)
+		//console.log('active marker', this.state.activeMarker);
+				
 		const styles = {
 			width: '100%',
 			height: '100%',
@@ -85,6 +86,7 @@ export class GoogleMap extends Component {
 
 		return (
 			<Map
+				tabIndex={0}
 				className="googleMap"
 				google={this.props.google}
 				zoom={13.5}
@@ -94,6 +96,7 @@ export class GoogleMap extends Component {
 
 			{locations.map(location =>
 				<Marker
+					tabIndex={0}
 					style={this.state.isMarkerClicked && styles.clickedMarker}
 					key={location.id}
 					title={location.title}
@@ -105,6 +108,7 @@ export class GoogleMap extends Component {
 			)}
 			
 			<InfoWindow
+				tabIndex={0}
 				role="Article"
 				key={this.state.activeMarkerInfo.venueId}
 				onClose={this.onInfoWindowClose}
